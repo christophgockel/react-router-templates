@@ -37,6 +37,6 @@ jobs:
       - name: Install
         run: npm install
         working-directory: ${{ runner.temp }}/consumed
-      - name: Build
-        run: npm run build
+      - name: Verify the scaffolded project
+        run: npm run verify
         working-directory: ${{ runner.temp }}/consumed
