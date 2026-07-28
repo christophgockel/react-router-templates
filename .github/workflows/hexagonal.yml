@@ -1,0 +1,42 @@
+name: Hexagonal Template
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    name: ${{ matrix.task }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [lint:verify, typecheck, test]
+    defaults:
+      run:
+        working-directory: hexagonal
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm install
+      - run: npm run ${{ matrix.task }}
+
+  e2e:
+    name: consume
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Scaffold a project from the template
+        run: npx create-react-router@latest "${{ runner.temp }}/consumed" --template ./hexagonal --no-git-init --no-install --yes
+      - name: Install
+        run: npm install
+        working-directory: ${{ runner.temp }}/consumed
+      - name: Verify the scaffolded project
+        run: npm run verify
+        working-directory: ${{ runner.temp }}/consumed
