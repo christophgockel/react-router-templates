@@ -24,6 +24,14 @@ Server-rendered React Router app on a custom Express server.
 This is the bare minimum to get a project running with the tooling already in place.
 
 
+### Hexagonal
+
+Server-rendered React Router app structured with ports and adapters.
+The core application, its domain and use cases, does not depend on the framework.
+React Router only serves it.
+It builds on the Basic template's tooling.
+
+
 ## Tooling
 
 Each template builds on the same core toolchain:
